@@ -28,6 +28,7 @@ app.get("/restaurants/:id", (req, res) => {
   const restaurant = restaurantList.results.filter(
     (item) => item.id === Number(req.params.id)
   );
+
   res.render("show", { restaurant: restaurant[0] });
 });
 
@@ -40,7 +41,12 @@ app.get("/search", (req, res) => {
       item.category.toUpperCase().includes(keyWord)
     );
   });
-  res.render("index", { restaurants: restaurant });
+  console.log(restaurant);
+  if (restaurant.length === 0) {
+    res.render("indexNone");
+  } else {
+    res.render("index", { restaurants: restaurant });
+  }
 });
 
 // start and listen on the Express server
